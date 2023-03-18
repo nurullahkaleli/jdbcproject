@@ -16,8 +16,30 @@ public class PreparedStatement01 {
 
         //3.step-Assign the values by using setInt() setString() methods etc
 
-        ps1.setInt(1, 9999);
-        ps1.setString(2, "IBM");
+        ps1.setInt(1, 555);
+        ps1.setString(2, "GOOGLE");
+
+        //4.Step-Execute the query for the update
+        int numberOfRows = ps1.executeUpdate();
+        String sql2 = "SELECT * FROM companies";
+
+        //5.Step - Display result
+        Statement statement = connection.createStatement();
+        ResultSet rs2 = statement.executeQuery(sql2);
+
+        while (rs2.next()){
+            System.out.println(rs2.getInt(1) + " "+ rs2.getString(2)+ "-"+ rs2.getInt(3));
+        }
+
+
+
+
+        connection.close();
+        statement.close();
+
+
+
+
 
     }
 }
