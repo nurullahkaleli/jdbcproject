@@ -1,7 +1,7 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import javax.xml.transform.Result;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JDBCUtils {
 
@@ -64,6 +64,38 @@ public class JDBCUtils {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    //The method to put column data into a list
+
+    public static List<Object> getColumnList(String columnName, String tableName){
+        List<Object> list= new ArrayList<>();
+
+        String sql= "SELECT " +columnName + " FROM " + tableName;
+
+        ResultSet resultSet;
+        try {
+            resultSet =statement.executeQuery(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        while (true){
+            try {
+                if (!resultSet.next()) break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                list.add(resultSet.getObject(1));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return list;
 
     }
 
